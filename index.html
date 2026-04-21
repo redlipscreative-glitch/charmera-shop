@@ -344,6 +344,7 @@
     <a href="#all-products" class="cat-link" onclick="setFilter('camera',this)">Cameras</a>
     <a href="#all-products" class="cat-link" onclick="setFilter('bundle',this)">Bundles</a>
     <a href="#all-products" class="cat-link" onclick="setFilter('accessory',this)">Accessories</a>
+    <a href="#all-products" class="cat-link" onclick="setFilter('lifestyle',this)">Lifestyle</a>
     <a href="#bundle-section" class="cat-link highlight">★ Bundle Deal</a>
     <a href="#how-section" class="cat-link">How to Order</a>
     <a href="#contact" class="cat-link">Contact</a>
@@ -381,6 +382,7 @@
         <li class="sidebar-item"><a href="#all-products" onclick="setFilter('camera')">Cameras <span class="sidebar-count" id="cat-count-camera">2</span></a></li>
         <li class="sidebar-item"><a href="#all-products" onclick="setFilter('bundle')">Bundles <span class="sidebar-count" id="cat-count-bundle">1</span></a></li>
         <li class="sidebar-item"><a href="#all-products" onclick="setFilter('accessory')">Accessories <span class="sidebar-count" id="cat-count-accessory">1</span></a></li>
+        <li class="sidebar-item"><a href="#all-products" onclick="setFilter('lifestyle')">Lifestyle <span class="sidebar-count" id="cat-count-lifestyle">1</span></a></li>
       </ul>
     </div>
     <div class="info-box">
@@ -428,6 +430,7 @@
         <button class="fpill" data-filter="camera">Cameras</button>
         <button class="fpill" data-filter="bundle">Bundles</button>
         <button class="fpill" data-filter="accessory">Accessories</button>
+        <button class="fpill" data-filter="lifestyle">Lifestyle</button>
         <span class="product-count-label" id="product-count"></span>
       </div>
       <div class="product-grid" id="product-grid"></div>
@@ -492,6 +495,7 @@
       <a class="footer-link" href="#all-products" onclick="setFilter('camera')">Cameras</a>
       <a class="footer-link" href="#bundle-section">Bundle Deals</a>
       <a class="footer-link" href="#all-products" onclick="setFilter('accessory')">Accessories</a>
+      <a class="footer-link" href="#all-products" onclick="setFilter('lifestyle')">Lifestyle</a>
     </div>
     <div>
       <div class="footer-col-title">Help</div>
@@ -646,6 +650,17 @@ const PRODUCTS = [
     image: 'images/microsd.png',
     desc: 'Compatible with Charmera (supports up to 128GB)',
     badges: [],
+    inStock: true,
+  },
+  {
+    id: 'glass-bottle-2000ml',
+    name: '2000ml Glass Bottle',
+    category: 'lifestyle',
+    price: 0,
+    emoji: '🍶',
+    image: 'images/glass-bottle.png',
+    desc: 'Large 2000ml glass water bottle with stainless steel lid and carry strap',
+    badges: ['New'],
     inStock: true,
   },
   /* ─── ADD NEW PRODUCTS HERE ───
@@ -838,7 +853,7 @@ function renderProducts() {
   const list = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
   document.getElementById('product-count').textContent = list.length + ' item' + (list.length !== 1 ? 's' : '') + ' found';
   // Update sidebar counts
-  ['all','camera','bundle','accessory'].forEach(cat => {
+  ['all','camera','bundle','accessory','lifestyle'].forEach(cat => {
     const el = document.getElementById('cat-count-' + cat);
     if (el) el.textContent = cat === 'all' ? PRODUCTS.length : PRODUCTS.filter(p => p.category === cat).length;
   });
