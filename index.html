@@ -146,6 +146,8 @@
     .product-card:hover { box-shadow: var(--shadow-hover); z-index: 2; }
     .card-img-wrap { background: var(--bg-grey); border-radius: var(--radius); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; overflow: hidden; }
     .card-emoji { font-size: 64px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1)); }
+    .card-real-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .product-card:hover .card-real-img { transform: scale(1.04); }
     .card-badges-wrap { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 4px; }
     .cbadge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 2px; }
     .cbadge-new { background: var(--red); color: #fff; }
@@ -406,7 +408,7 @@
       <div style="flex:1">
         <div class="featured-title">Starter Bundle — Best Value!</div>
         <div class="featured-desc">Camera + Video Tutorial + Editing Presets + Beginner's Guide. Everything to shoot like a pro.</div>
-        <button class="hero-btn hero-btn-red" onclick="addToCart('charmera-bundle');openCart()" style="font-size:13px;padding:9px 20px">Add Bundle to Cart →</button>
+        <button class="hero-btn hero-btn-red" onclick="addToCart('charmera-bundle');openCart()" style="font-size:13px;padding:9px 20px">Add Bundle to Cart → (Max 2)</button>
       </div>
       <div style="text-align:right;flex-shrink:0">
         <div style="font-size:11px;color:#999;text-decoration:line-through" id="banner-orig"></div>
@@ -593,8 +595,9 @@ const PRODUCTS = [
     id: 'charmera-single',
     name: 'KODAK Charmera Single Box',
     category: 'camera',
-    price: 159,
+    price: 199,
     emoji: '📷',
+    image: 'images/single-box.png',
     desc: 'Blind box — 1 random design from 7 styles',
     badges: ['New'],
     inStock: true,
@@ -603,9 +606,10 @@ const PRODUCTS = [
     id: 'charmera-whole-set',
     name: 'Charmera Whole Set (6 Boxes)',
     category: 'camera',
-    price: 869,
-    originalPrice: 954,
+    price: 1088,
+    originalPrice: 1194,
     emoji: '🎁',
+    image: 'images/whole-set.png',
     desc: '6 unique designs, no repeats — full collection',
     badges: ['Best Seller'],
     inStock: true,
@@ -614,20 +618,23 @@ const PRODUCTS = [
     id: 'charmera-bundle',
     name: 'Charmera Starter Bundle',
     category: 'bundle',
-    price: 199,
+    price: 188,
     originalPrice: 249,
     emoji: '✨',
-    desc: 'Camera + Tutorial + Presets + Guide',
+    image: 'images/bundle.png',
+    desc: 'Camera + Tutorial + Presets + Guide (max 2 boxes per order)',
     badges: ['Best Value'],
     inStock: true,
+    maxQty: 2,
   },
   {
-    id: 'microsd-64',
-    name: 'MicroSD Card 64GB',
+    id: 'microsd-16',
+    name: 'MicroSD Card 16GB',
     category: 'accessory',
     price: 39,
     emoji: '💾',
-    desc: 'Compatible with Charmera (supports 1GB–128GB)',
+    image: 'images/microsd.png',
+    desc: 'Compatible with Charmera (supports up to 128GB)',
     badges: [],
     inStock: true,
   },
@@ -663,6 +670,7 @@ function addToCart(id) {
   const p = PRODUCTS.find(x => x.id === id);
   if (!p || !p.inStock) return;
   const ex = cart.find(x => x.id === id);
+  if (p.maxQty && ex && ex.qty >= p.maxQty) { toast('Max ' + p.maxQty + ' per order for this item'); return; }
   if (ex) ex.qty++; else cart.push({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, qty: 1 });
   save(); syncCart();
   toast('Added to cart: ' + p.name);
@@ -828,7 +836,14 @@ function renderProducts() {
     const card = document.createElement('div'); card.className = 'product-card';
     // Image
     const imgWrap = document.createElement('div'); imgWrap.className = 'card-img-wrap';
-    const emoji = document.createElement('div'); emoji.className = 'card-emoji'; emoji.textContent = p.emoji;
+    if (p.image) {
+      const img = document.createElement('img'); img.className = 'card-real-img';
+      img.src = p.image; img.alt = p.name; img.loading = 'lazy';
+      imgWrap.appendChild(img);
+    } else {
+      const emoji = document.createElement('div'); emoji.className = 'card-emoji'; emoji.textContent = p.emoji;
+      imgWrap.appendChild(emoji);
+    }
     const badgesWrap = document.createElement('div'); badgesWrap.className = 'card-badges-wrap';
     if (!p.inStock) { const b = document.createElement('span'); b.className = 'cbadge cbadge-sold'; b.textContent = 'Sold Out'; badgesWrap.appendChild(b); }
     else {
@@ -921,8 +936,14 @@ function doSearch() {
 function renderSingleCard(p, grid) {
   const card = document.createElement('div'); card.className = 'product-card';
   const imgWrap = document.createElement('div'); imgWrap.className = 'card-img-wrap';
-  const emoji = document.createElement('div'); emoji.className = 'card-emoji'; emoji.textContent = p.emoji;
-  imgWrap.appendChild(emoji);
+  if (p.image) {
+    const img = document.createElement('img'); img.className = 'card-real-img';
+    img.src = p.image; img.alt = p.name; img.loading = 'lazy';
+    imgWrap.appendChild(img);
+  } else {
+    const emoji = document.createElement('div'); emoji.className = 'card-emoji'; emoji.textContent = p.emoji;
+    imgWrap.appendChild(emoji);
+  }
   const stock = document.createElement('div'); stock.className = 'card-stock ' + (p.inStock ? 'in-stock' : 'out-stock');
   const dot = document.createElement('span'); dot.className = 'stock-dot';
   const stxt = document.createElement('span'); stxt.textContent = p.inStock ? 'In Stock' : 'Out of Stock';
