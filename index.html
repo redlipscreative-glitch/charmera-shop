@@ -857,7 +857,7 @@ function renderProducts() {
         badgesWrap.appendChild(b);
       });
     }
-    imgWrap.appendChild(emoji); imgWrap.appendChild(badgesWrap);
+    imgWrap.appendChild(badgesWrap);
     // Stock
     const stock = document.createElement('div');
     stock.className = 'card-stock ' + (p.inStock ? 'in-stock' : 'out-stock');
