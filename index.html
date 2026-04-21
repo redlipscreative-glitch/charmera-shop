@@ -6,336 +6,459 @@
   <title>CHARMERA SHOP — Keychain Camera & Bundles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --yellow: #F7D417;
-      --dark: #0F0F0F;
-      --surface: #161616;
-      --surface2: #1E1E1E;
-      --border: #2A2A2A;
-      --off-white: #F5F0E8;
-      --muted: #8A8070;
-      --green: #3D6B4F;
-      --green-light: #8BC4A0;
-      --red: #C0392B;
+      --yellow: #F5C800;
+      --yellow-light: #FFF8D6;
+      --dark: #111111;
+      --text: #1A1A1A;
+      --text-muted: #888888;
+      --text-light: #BBBBBB;
+      --bg: #FFFFFF;
+      --bg-soft: #F7F7F7;
+      --bg-warm: #FAFAF8;
+      --border: #E8E8E8;
+      --border-strong: #D0D0D0;
+      --green: #16A34A;
+      --green-bg: #F0FDF4;
       --wa-green: #25D366;
-      --radius: 4px;
+      --red: #DC2626;
+      --radius-sm: 6px;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--dark); color: var(--off-white); font-family: 'Instrument Serif', Georgia, serif; overflow-x: hidden; min-height: 100vh; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; min-height: 100vh; font-size: 15px; line-height: 1.6; }
     body.no-scroll { overflow: hidden; }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+    img { max-width: 100%; display: block; }
 
-    body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9000; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px; }
+    /* ── ANNOUNCEMENT BAR ── */
+    .announce-bar {
+      background: var(--dark); color: #fff;
+      text-align: center; padding: 10px 20px;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.02em;
+    }
+    .announce-bar span { color: var(--yellow); margin: 0 6px; }
 
-    .film-strip { height: 34px; display: flex; align-items: center; background: var(--dark); border-bottom: 2px solid var(--yellow); overflow: hidden; gap: 12px; }
-    .film-holes { display: flex; gap: 12px; padding: 0 10px; flex-shrink: 0; }
-    .film-hole { width: 16px; height: 20px; border: 1.5px solid var(--muted); border-radius: 3px; opacity: 0.4; }
-    .film-ticker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.3em; color: var(--muted); white-space: nowrap; animation: ticker 22s linear infinite; flex: 1; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    .navbar { position: sticky; top: 0; z-index: 200; background: rgba(15,15,15,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.12em; }
-    .nav-logo .y { color: var(--yellow); }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
-    .nav-links a:hover { color: var(--off-white); }
-    .cart-btn { position: relative; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s; }
-    .cart-btn:hover { border-color: var(--yellow); }
-    .cart-btn svg { width: 20px; height: 20px; stroke: var(--off-white); fill: none; stroke-width: 1.5; }
-    .cart-count { position: absolute; top: -6px; right: -6px; background: var(--yellow); color: var(--dark); width: 18px; height: 18px; border-radius: 50%; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0); transition: all 0.2s; }
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--dark); letter-spacing: -0.01em; }
+    .nav-logo-dot { width: 8px; height: 8px; background: var(--yellow); border-radius: 50%; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .cart-btn {
+      position: relative; display: flex; align-items: center; gap: 8px;
+      background: var(--dark); color: #fff;
+      padding: 10px 18px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 600;
+      transition: background 0.2s;
+    }
+    .cart-btn:hover { background: #333; }
+    .cart-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+    .cart-count {
+      background: var(--yellow); color: var(--dark);
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0); transition: all 0.2s;
+    }
     .cart-count.visible { opacity: 1; transform: scale(1); }
 
-    .hero { min-height: 90vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 60px 40px; gap: 60px; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(247,212,23,0.3); border-radius: 100px; padding: 5px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--yellow); margin-bottom: 24px; }
-    .blink { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: blink 2s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(70px, 8vw, 120px); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 20px; }
-    .hero-title .y { color: var(--yellow); }
-    .hero-title .o { -webkit-text-stroke: 2px var(--off-white); color: transparent; }
-    .hero-sub { font-size: 17px; font-style: italic; color: var(--muted); line-height: 1.65; max-width: 420px; margin-bottom: 36px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius); transition: all 0.2s; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 14px 28px; }
+    /* ── HERO ── */
+    .hero {
+      background: var(--bg-warm);
+      padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--yellow-light); border: 1px solid #F0D060;
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 12px; font-weight: 600; color: #856E00;
+      margin-bottom: 24px; letter-spacing: 0.03em;
+    }
+    .hero-eyebrow-dot { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; }
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(48px, 6vw, 80px); line-height: 1.05;
+      letter-spacing: -0.03em; color: var(--dark); margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--yellow); }
+    .hero-desc { font-size: 17px; color: var(--text-muted); line-height: 1.7; max-width: 440px; margin-bottom: 36px; font-weight: 400; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius-sm); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 14px; padding: 13px 24px; transition: all 0.2s; cursor: pointer; }
+    .btn-dark { background: var(--dark); color: #fff; }
+    .btn-dark:hover { background: #333; transform: translateY(-1px); box-shadow: var(--shadow); }
+    .btn-outline { border: 1.5px solid var(--border-strong); color: var(--text); background: #fff; }
+    .btn-outline:hover { border-color: var(--dark); transform: translateY(-1px); }
     .btn-yellow { background: var(--yellow); color: var(--dark); }
-    .btn-yellow:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(247,212,23,0.2); }
-    .btn-ghost { border: 1px solid var(--border); color: var(--off-white); }
-    .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+    .btn-yellow:hover { background: #E8BB00; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(245,200,0,0.4); }
     .btn-wa { background: var(--wa-green); color: #fff; }
-    .btn-wa:hover { background: #1ebe5a; transform: translateY(-2px); }
+    .btn-wa:hover { background: #1ebe5a; transform: translateY(-1px); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #15803D; }
+    .hero-stats { display: flex; gap: 32px; margin-top: 40px; }
+    .stat { text-align: left; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--dark); letter-spacing: -0.02em; }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
 
+    /* Hero visual */
     .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .cam-wrap { position: relative; width: 320px; height: 400px; }
-    .cam-orbit { position: absolute; top: 50%; left: 50%; width: 360px; height: 360px; margin: -180px; border: 1px solid rgba(247,212,23,0.1); border-radius: 50%; animation: orbit 25s linear infinite; }
-    .cam-orbit::before { content: ''; position: absolute; top: -5px; left: 50%; margin-left: -5px; width: 10px; height: 10px; background: var(--yellow); border-radius: 50%; box-shadow: 0 0 16px 6px rgba(247,212,23,0.4); }
-    @keyframes orbit { to { transform: rotate(360deg); } }
-    .cam-body { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; background: linear-gradient(145deg, #252525, #171717); border-radius: 18px; padding: 18px 14px; border: 2px solid #2C2C2C; box-shadow: 0 20px 60px rgba(0,0,0,0.7); }
-    .cam-brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.3em; color: var(--yellow); }
-    .cam-model { font-family: 'IBM Plex Mono', monospace; font-size: 7px; letter-spacing: 0.2em; color: var(--muted); opacity: 0.6; margin-bottom: 12px; }
-    .cam-lens { width: 76px; height: 76px; margin: 0 auto 12px; background: radial-gradient(circle at 35% 35%, #2C2C3C, #060606); border-radius: 50%; border: 3px solid #1E1E1E; box-shadow: 0 0 0 4px #161616, 0 0 0 6px #222, inset 0 2px 8px rgba(0,0,0,0.9); position: relative; overflow: hidden; }
-    .cam-lens::after { content: ''; position: absolute; top: 12px; left: 12px; width: 22px; height: 14px; background: rgba(255,255,255,0.05); border-radius: 50%; transform: rotate(-30deg); }
-    .cam-foot { display: flex; justify-content: space-between; align-items: center; }
-    .cam-flash { width: 20px; height: 12px; background: #DDDDA0; border-radius: 2px; opacity: 0.7; }
-    .cam-shutter { width: 14px; height: 14px; background: var(--red); border-radius: 50%; }
-    .cam-ring { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); }
-    .cam-ring-top { width: 20px; height: 20px; border: 2.5px solid var(--muted); border-radius: 50%; opacity: 0.5; }
-    .cam-ring-stem { width: 2px; height: 18px; background: linear-gradient(to bottom, var(--muted), transparent); opacity: 0.4; margin: 0 auto; }
-    .cam-float { position: absolute; background: rgba(15,15,15,0.9); border: 1px solid rgba(247,212,23,0.3); border-radius: 8px; padding: 8px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; }
-    .f1 { top: 20px; right: -20px; color: var(--yellow); animation: floatY 3s ease-in-out infinite; }
-    .f2 { bottom: 80px; left: -30px; color: var(--off-white); animation: floatY 3.8s ease-in-out infinite 0.5s; }
-    .f3 { bottom: 20px; right: 0; color: var(--green-light); animation: floatY 4.2s ease-in-out infinite 1s; }
-    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .cam-card {
+      background: #fff; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg); padding: 48px 40px;
+      text-align: center; border: 1px solid var(--border);
+      position: relative; overflow: hidden; width: 320px;
+    }
+    .cam-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: linear-gradient(90deg, var(--yellow) 0%, #FFD700 100%);
+    }
+    .cam-emoji { font-size: 96px; display: block; margin-bottom: 20px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15)); }
+    .cam-card-brand { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+    .cam-card-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 16px; }
+    .cam-pill-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .cam-pill { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 100px; padding: 5px 12px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    .cam-pill.yellow { background: var(--yellow-light); border-color: #F0D060; color: #856E00; }
+    .cam-float-badge {
+      position: absolute; background: #fff; border-radius: var(--radius-sm);
+      box-shadow: var(--shadow); padding: 10px 14px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    }
+    .fb-1 { top: 24px; right: -16px; animation: floatY 3s ease-in-out infinite; }
+    .fb-2 { bottom: 56px; left: -20px; animation: floatY 3.5s ease-in-out infinite 0.5s; }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .fb-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .ticker-bar { background: var(--yellow); padding: 11px 0; overflow: hidden; }
-    .ticker-track { display: flex; gap: 36px; animation: ticker 14s linear infinite; white-space: nowrap; }
-    .ticker-item { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.15em; color: var(--dark); flex-shrink: 0; }
+    /* ── TICKER ── */
+    .ticker { background: var(--yellow); padding: 12px 0; overflow: hidden; }
+    .ticker-track { display: flex; gap: 40px; animation: ticker 16s linear infinite; white-space: nowrap; }
+    .ticker-item { font-size: 14px; font-weight: 700; color: var(--dark); letter-spacing: 0.05em; flex-shrink: 0; }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    .shop-section { padding: 80px 40px; }
-    .section-eyebrow { display: flex; align-items: center; gap: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px; }
-    .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--yellow); }
-    .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.5vw, 72px); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 16px; }
-    .section-heading .y { color: var(--yellow); }
+    /* ── SECTION COMMON ── */
+    .section { padding: 80px 48px; }
+    .section-header { margin-bottom: 48px; }
+    .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(32px, 4vw, 48px); color: var(--dark); letter-spacing: -0.02em; line-height: 1.1; }
+    .section-title .accent { color: var(--yellow); }
+    .section-desc { font-size: 16px; color: var(--text-muted); margin-top: 12px; max-width: 540px; }
+
+    /* ── SHOP ── */
+    .shop-section { background: var(--bg); }
     .shop-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
     .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .pill { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); transition: all 0.2s; cursor: pointer; }
-    .pill.active, .pill:hover { border-color: var(--yellow); color: var(--yellow); }
-    .product-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .pill { font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 100px; border: 1.5px solid var(--border); color: var(--text-muted); background: #fff; transition: all 0.2s; cursor: pointer; }
+    .pill:hover { border-color: var(--dark); color: var(--dark); }
+    .pill.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .product-count { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
 
-    .product-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; cursor: pointer; }
-    .product-card:hover { transform: translateY(-6px); border-color: rgba(247,212,23,0.4); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
-    .card-image { aspect-ratio: 1; background: var(--surface2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-    .card-img-art { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 72px; position: relative; }
-    .card-img-art::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(247,212,23,0.07), transparent 60%); }
-    .card-badge-wrap { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .card-badge { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
-    .badge-new { background: var(--yellow); color: var(--dark); }
-    .badge-bundle { background: rgba(61,107,79,0.4); color: var(--green-light); border: 1px solid var(--green); }
-    .badge-hot { background: rgba(192,57,43,0.3); color: #E57373; border: 1px solid var(--red); }
-    .badge-grey { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+    /* ── PRODUCT CARD ── */
+    .product-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--border-strong); }
+    .card-image { background: var(--bg-soft); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .card-img-emoji { font-size: 80px; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.1)); position: relative; z-index: 1; }
+    .card-image::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(245,200,0,0.12), transparent 65%); }
+    .card-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; }
+    .badge { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+    .badge-new { background: var(--dark); color: #fff; }
+    .badge-sale { background: var(--red); color: #fff; }
+    .badge-bundle { background: var(--green-bg); color: var(--green); border: 1px solid #86EFAC; }
+    .badge-hot { background: #FFF7ED; color: #EA580C; border: 1px solid #FED7AA; }
+    .badge-grey { background: var(--bg-soft); color: var(--text-muted); border: 1px solid var(--border); }
     .card-body { padding: 20px; }
-    .card-cat { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
-    .card-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.04em; line-height: 1; margin-bottom: 6px; }
-    .card-desc { font-size: 13px; font-style: italic; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+    .card-cat { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+    .card-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--dark); margin-bottom: 6px; letter-spacing: -0.01em; }
+    .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; }
     .price-block { display: flex; align-items: baseline; gap: 6px; }
-    .card-price { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--yellow); letter-spacing: 0.02em; }
-    .card-price small { font-size: 14px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-right: 2px; }
-    .price-original { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: line-through; }
-    .card-add { width: 40px; height: 40px; background: var(--yellow); color: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 300; transition: all 0.2s; flex-shrink: 0; }
-    .card-add:hover { background: #fff; transform: scale(1.1); }
-    .card-add:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+    .card-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--dark); letter-spacing: -0.01em; }
+    .card-price small { font-size: 13px; font-weight: 600; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; margin-right: 1px; }
+    .price-original { font-size: 12px; color: var(--text-light); text-decoration: line-through; font-weight: 500; }
+    .card-add { width: 40px; height: 40px; background: var(--dark); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 300; transition: all 0.2s; flex-shrink: 0; }
+    .card-add:hover { background: #333; transform: scale(1.1); }
+    .card-add:disabled { background: var(--bg-soft); color: var(--text-light); cursor: not-allowed; transform: none; }
 
-    .bundle-feature { background: linear-gradient(135deg, #0A1208 0%, #0D0D0D 50%, #080E08 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 40px; }
-    .bundle-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 48px; }
-    .bundle-includes { display: flex; flex-direction: column; gap: 16px; }
-    .bundle-row { display: flex; align-items: flex-start; gap: 16px; padding: 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(61,107,79,0.2); border-radius: var(--radius); transition: border-color 0.2s; }
-    .bundle-row:hover { border-color: rgba(61,107,79,0.5); }
-    .bundle-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: rgba(61,107,79,0.4); line-height: 1; flex-shrink: 0; width: 36px; }
-    .bundle-icon { font-size: 24px; flex-shrink: 0; margin-top: 4px; }
-    .bundle-info-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; margin-bottom: 4px; }
-    .bundle-info-desc { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.6; }
-    .bundle-cta-panel { background: var(--surface); border: 1px solid rgba(61,107,79,0.3); border-radius: var(--radius); padding: 36px; text-align: center; }
-    .bundle-price-big { font-family: 'Bebas Neue', sans-serif; font-size: 80px; color: var(--green-light); line-height: 1; }
-    .bundle-price-currency { font-family: 'IBM Plex Mono', monospace; font-size: 20px; vertical-align: super; }
-    .bundle-savings { display: inline-block; background: rgba(61,107,79,0.2); color: var(--green-light); border: 1px solid var(--green); padding: 4px 12px; border-radius: 100px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; margin: 12px 0 24px; }
+    /* ── BUNDLE FEATURE ── */
+    .bundle-section { background: var(--bg-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .bundle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .bundle-items { display: flex; flex-direction: column; gap: 12px; }
+    .bundle-item { display: flex; align-items: flex-start; gap: 16px; background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .bundle-item:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+    .bundle-item-icon { width: 44px; height: 44px; background: var(--yellow-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .bundle-item-title { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+    .bundle-item-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
 
-    .how-section { padding: 80px 40px; background: var(--surface); }
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); margin-top: 48px; border: 1px solid var(--border); }
-    .step { background: var(--surface); padding: 36px 28px; }
-    .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: rgba(247,212,23,0.1); line-height: 1; margin-bottom: 12px; }
-    .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.04em; margin-bottom: 10px; }
-    .step-desc { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.7; }
-    .step-desc a { color: var(--yellow); }
+    .bundle-cta { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 36px; position: sticky; top: 88px; }
+    .bundle-tag { display: inline-block; background: var(--green-bg); color: var(--green); border: 1px solid #86EFAC; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .bundle-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .bundle-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 52px; color: var(--dark); letter-spacing: -0.03em; }
+    .bundle-price small { font-size: 20px; font-weight: 700; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; }
+    .bundle-orig { font-size: 16px; color: var(--text-light); text-decoration: line-through; font-weight: 500; }
+    .bundle-save { font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 20px; }
+    .bundle-includes-list { margin: 20px 0; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .inc-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 500; }
+    .inc-row:last-child { border-bottom: none; }
+    .inc-check { width: 20px; height: 20px; background: var(--green-bg); border: 1.5px solid #86EFAC; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 11px; flex-shrink: 0; }
 
-    .contact-section { padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
-    .contact-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Bebas Neue', sans-serif; font-size: 22vw; white-space: nowrap; color: rgba(247,212,23,0.02); pointer-events: none; letter-spacing: 0.1em; }
-    .contact-inner { position: relative; z-index: 1; }
-    .contact-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+    /* ── HOW TO ORDER ── */
+    .how-section { background: var(--bg); }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step-card { background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 32px 28px; }
+    .step-number { width: 36px; height: 36px; background: var(--dark); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; margin-bottom: 20px; }
+    .step-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--dark); margin-bottom: 10px; }
+    .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .step-desc a { color: var(--dark); font-weight: 600; text-decoration: underline; }
 
-    .footer { background: #080808; border-top: 2px solid var(--yellow); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.12em; color: var(--yellow); }
-    .footer-text { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+    /* ── FEATURES ── */
+    .features-section { background: var(--dark); }
+    .features-section .section-title { color: #fff; }
+    .features-section .section-eyebrow { color: rgba(255,255,255,0.5); }
+    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #2A2A2A; border: 1px solid #2A2A2A; border-radius: var(--radius); overflow: hidden; margin-top: 48px; }
+    .feat-card { background: #1A1A1A; padding: 32px 24px; }
+    .feat-icon { font-size: 32px; margin-bottom: 16px; }
+    .feat-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: #fff; margin-bottom: 8px; }
+    .feat-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.65; }
 
-    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    /* ── CONTACT ── */
+    .contact-section { background: var(--bg-soft); border-top: 1px solid var(--border); }
+    .contact-card { background: var(--dark); border-radius: var(--radius-lg); padding: 64px 48px; text-align: center; position: relative; overflow: hidden; }
+    .contact-card::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(245,200,0,0.15) 0%, transparent 60%); pointer-events: none; }
+    .contact-card .section-title { color: #fff; position: relative; }
+    .contact-card .section-desc { color: rgba(255,255,255,0.55); margin: 12px auto 36px; position: relative; }
+    .contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+    .contact-info { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    .footer { background: #fff; border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--dark); display: flex; align-items: center; gap: 8px; }
+    .footer-logo-dot { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; }
+    .footer-text { font-size: 13px; color: var(--text-muted); }
+
+    /* ── CART DRAWER ── */
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .cart-overlay.open { opacity: 1; pointer-events: all; }
-    .cart-drawer { position: fixed; top: 0; right: 0; height: 100vh; width: 400px; max-width: 95vw; background: #111; z-index: 301; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; border-left: 1px solid var(--border); }
+    .cart-drawer { position: fixed; top: 0; right: 0; height: 100vh; width: 420px; max-width: 95vw; background: #fff; z-index: 301; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; border-left: 1px solid var(--border); box-shadow: -8px 0 40px rgba(0,0,0,0.1); }
     .cart-drawer.open { transform: translateX(0); }
-    .cart-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .cart-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.08em; }
-    .close-btn { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--muted); transition: all 0.2s; }
-    .close-btn:hover { border-color: var(--off-white); color: var(--off-white); }
-    .cart-items { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .cart-item { display: flex; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
-    .cart-item-icon { width: 56px; height: 56px; background: var(--surface2); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .cart-header { padding: 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .cart-header-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--dark); }
+    .close-btn { width: 36px; height: 36px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--text-muted); transition: all 0.2s; }
+    .close-btn:hover { border-color: var(--dark); color: var(--dark); }
+    .cart-items-list { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .cart-item { display: flex; gap: 14px; align-items: center; background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+    .cart-item-emoji { width: 56px; height: 56px; background: #fff; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; border: 1px solid var(--border); }
     .cart-item-info { flex: 1; min-width: 0; }
-    .cart-item-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .cart-item-price { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--yellow); margin-top: 2px; }
+    .cart-item-name { font-weight: 700; font-size: 15px; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart-item-price { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
     .cart-qty { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-    .qty-btn { width: 26px; height: 26px; border: 1px solid var(--border); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--muted); transition: all 0.2s; }
-    .qty-btn:hover { border-color: var(--off-white); color: var(--off-white); }
-    .qty-num { font-family: 'IBM Plex Mono', monospace; font-size: 13px; min-width: 20px; text-align: center; }
-    .item-remove { font-size: 16px; color: var(--muted); flex-shrink: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
-    .item-remove:hover { color: #E57373; }
-    .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--muted); }
-    .cart-empty-icon { font-size: 48px; opacity: 0.4; }
-    .cart-empty p { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
-    .cart-footer { padding: 20px 24px; border-top: 1px solid var(--border); flex-shrink: 0; }
-    .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
-    .cart-total-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-    .cart-total-val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--yellow); }
-    .cart-total-val small { font-size: 16px; color: var(--muted); }
-    .btn-full { width: 100%; padding: 15px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: var(--radius); transition: all 0.2s; }
-    .btn-full-yellow { background: var(--yellow); color: var(--dark); margin-bottom: 8px; }
-    .btn-full-yellow:hover { background: #fff; }
-    .btn-full-outline { border: 1px solid var(--border); color: var(--muted); }
-    .btn-full-outline:hover { border-color: var(--off-white); color: var(--off-white); }
+    .qty-btn { width: 28px; height: 28px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--text-muted); transition: all 0.2s; font-weight: 600; }
+    .qty-btn:hover { border-color: var(--dark); color: var(--dark); }
+    .qty-num { font-size: 14px; font-weight: 700; min-width: 20px; text-align: center; }
+    .item-remove { font-size: 16px; color: var(--text-light); flex-shrink: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+    .item-remove:hover { color: var(--red); }
+    .cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text-muted); }
+    .cart-empty-icon { font-size: 52px; }
+    .cart-empty p { font-size: 14px; font-weight: 500; }
+    .cart-footer { padding: 20px 24px; border-top: 1px solid var(--border); flex-shrink: 0; background: var(--bg-soft); }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .cart-total-label { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+    .cart-total-val { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--dark); }
+    .btn-full { width: 100%; padding: 15px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; border-radius: var(--radius-sm); transition: all 0.2s; text-align: center; display: block; }
+    .btn-full-dark { background: var(--dark); color: #fff; margin-bottom: 8px; }
+    .btn-full-dark:hover { background: #333; }
+    .btn-full-outline { border: 1.5px solid var(--border); color: var(--text-muted); }
+    .btn-full-outline:hover { border-color: var(--dark); color: var(--dark); }
     .btn-full-wa { background: var(--wa-green); color: #fff; }
-    .btn-full-wa:hover { background: #1ebe5a; transform: translateY(-1px); }
-    .btn-full-bank { background: var(--yellow); color: var(--dark); }
-    .btn-full-bank:hover { background: #fff; transform: translateY(-1px); }
+    .btn-full-wa:hover { background: #1ebe5a; }
+    .btn-full-yellow { background: var(--yellow); color: var(--dark); }
+    .btn-full-yellow:hover { background: #E8BB00; }
 
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 400; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(6px); display: flex; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
+    /* ── CHECKOUT MODAL ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 400; opacity: 0; pointer-events: none; transition: opacity 0.3s; display: flex; align-items: flex-start; justify-content: center; padding: 24px; overflow-y: auto; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal-box { background: #111; border: 1px solid var(--border); border-radius: 6px; width: 100%; max-width: 560px; transform: translateY(20px); transition: transform 0.3s; margin: auto; }
+    .modal-box { background: #fff; border-radius: var(--radius-lg); width: 100%; max-width: 560px; transform: translateY(16px); transition: transform 0.3s; margin: auto; box-shadow: var(--shadow-lg); overflow: hidden; }
     .modal-overlay.open .modal-box { transform: translateY(0); }
     .modal-top { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--dark); }
     .modal-body { padding: 28px; }
-    .order-summary-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 24px; }
-    .summary-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-    .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+    .order-summary { background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 24px; }
+    .summary-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 12px; }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .summary-row:last-child { border-bottom: none; }
-    .summary-price { color: var(--yellow); }
-    .summary-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-    .summary-total-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
-    .summary-total-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--yellow); }
+    .summary-price { font-weight: 700; color: var(--dark); }
+    .summary-total { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1.5px solid var(--border-strong); }
+    .summary-total-label { font-weight: 700; font-size: 14px; }
+    .summary-total-val { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; color: var(--dark); }
     .form-group { margin-bottom: 16px; }
-    .form-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 7px; }
-    .form-input { width: 100%; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--off-white); font-family: 'IBM Plex Mono', monospace; font-size: 13px; transition: border-color 0.2s; outline: none; }
-    .form-input:focus { border-color: var(--yellow); }
-    .form-input::placeholder { color: var(--muted); opacity: 0.5; }
-    textarea.form-input { height: 80px; resize: vertical; }
+    .form-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); display: block; margin-bottom: 7px; }
+    .form-input { width: 100%; padding: 12px 14px; background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; transition: border-color 0.2s; outline: none; }
+    .form-input:focus { border-color: var(--dark); background: #fff; }
+    .form-input::placeholder { color: var(--text-light); }
+    textarea.form-input { height: 88px; resize: vertical; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .payment-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; margin-top: 24px; }
-    .payment-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
-    .pay-opt { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .pay-opt:hover { border-color: rgba(247,212,23,0.4); }
-    .pay-opt.selected { border-color: var(--yellow); background: rgba(247,212,23,0.05); }
+    .pay-section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 10px; margin-top: 20px; display: block; }
+    .pay-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .pay-opt { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px; cursor: pointer; transition: all 0.2s; }
+    .pay-opt:hover { border-color: var(--border-strong); }
+    .pay-opt.selected { border-color: var(--dark); background: var(--bg-soft); }
     .pay-opt-icon { font-size: 22px; margin-bottom: 6px; }
-    .pay-opt-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--off-white); margin-bottom: 2px; }
-    .pay-opt-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); line-height: 1.4; }
-    .checkout-note { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.6; }
+    .pay-opt-label { font-weight: 700; font-size: 13px; color: var(--dark); margin-bottom: 2px; }
+    .pay-opt-sub { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .checkout-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.6; }
 
-    .success-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 500; opacity: 0; pointer-events: none; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; }
+    /* ── SUCCESS ── */
+    .success-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 500; opacity: 0; pointer-events: none; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; padding: 24px; }
     .success-overlay.open { opacity: 1; pointer-events: all; }
-    .success-box { background: #111; border: 1px solid var(--border); border-radius: 6px; padding: 48px 40px; max-width: 480px; width: 90%; text-align: center; transform: scale(0.9); transition: transform 0.3s; }
+    .success-box { background: #fff; border-radius: var(--radius-lg); padding: 48px 40px; max-width: 480px; width: 100%; text-align: center; transform: scale(0.95); transition: transform 0.3s; box-shadow: var(--shadow-lg); }
     .success-overlay.open .success-box { transform: scale(1); }
-    .success-icon { font-size: 56px; margin-bottom: 20px; display: block; }
-    .success-title { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 0.06em; margin-bottom: 12px; }
-    .success-sub { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
-    .bank-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; text-align: left; }
-    .bank-card-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); margin-bottom: 14px; }
-    .bank-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+    .success-icon { font-size: 60px; display: block; margin-bottom: 20px; }
+    .success-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 30px; color: var(--dark); margin-bottom: 12px; }
+    .success-sub { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+    .bank-card { background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 20px; text-align: left; }
+    .bank-card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 14px; }
+    .bank-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .bank-row:last-child { border-bottom: none; }
-    .bank-label { color: var(--muted); }
-    .bank-val { color: var(--off-white); font-weight: 600; }
+    .bank-label { color: var(--text-muted); font-weight: 500; }
+    .bank-val { color: var(--dark); font-weight: 700; }
 
+    /* ── TOAST ── */
     .toast-wrap { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 600; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
-    .toast { background: var(--surface); border: 1px solid var(--yellow); border-radius: var(--radius); padding: 12px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; white-space: nowrap; animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+    .toast { background: var(--dark); color: #fff; border-radius: var(--radius-sm); padding: 12px 20px; font-size: 13px; font-weight: 600; white-space: nowrap; animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 8px; }
+    @keyframes toastIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes toastOut { from{opacity:1} to{opacity:0} }
 
-    @media (max-width: 860px) {
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
       .navbar { padding: 0 20px; }
       .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 40px 20px; text-align: center; min-height: auto; gap: 40px; }
+      .hero { grid-template-columns: 1fr; padding: 48px 20px; gap: 48px; text-align: center; }
       .hero-visual { order: -1; }
-      .hero-sub { max-width: 100%; margin: 0 auto 36px; }
+      .hero-desc { margin: 0 auto 36px; }
       .hero-actions { justify-content: center; }
-      .shop-section, .bundle-feature, .how-section, .contact-section { padding: 60px 20px; }
-      .bundle-feature-grid { grid-template-columns: 1fr; }
+      .hero-stats { justify-content: center; }
+      .section { padding: 60px 20px; }
+      .bundle-grid { grid-template-columns: 1fr; }
+      .bundle-cta { position: static; }
       .steps-grid { grid-template-columns: 1fr; }
-      .payment-opts, .form-row { grid-template-columns: 1fr; }
-      .footer { flex-direction: column; text-align: center; padding: 20px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .form-row, .pay-opts { grid-template-columns: 1fr; }
+      .contact-card { padding: 40px 24px; }
+      .footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+    }
+    @media (max-width: 560px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 16px; align-items: center; }
     }
   </style>
 </head>
 <body>
 
-<div class="film-strip">
-  <div class="film-holes"><div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div></div>
-  <div class="film-ticker">
-    KODAK CHARMERA &nbsp;·&nbsp; KEYCHAIN DIGITAL CAMERA &nbsp;·&nbsp; BLIND BOX &nbsp;·&nbsp; 7 DESIGNS &nbsp;·&nbsp; BUNDLE DEAL AVAILABLE &nbsp;·&nbsp;
-    KODAK CHARMERA &nbsp;·&nbsp; KEYCHAIN DIGITAL CAMERA &nbsp;·&nbsp; BLIND BOX &nbsp;·&nbsp; 7 DESIGNS &nbsp;·&nbsp; BUNDLE DEAL AVAILABLE &nbsp;·&nbsp;
-  </div>
-  <div class="film-holes"><div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div></div>
-</div>
+<!-- ANNOUNCE BAR -->
+<div class="announce-bar">Free digital bundle with every camera purchase <span>✦</span> WhatsApp us to order: +6011-6097 9138</div>
 
+<!-- NAVBAR -->
 <nav class="navbar">
-  <a class="nav-logo" href="#"><span class="y">CHARM</span>ERA</a>
+  <a class="nav-logo" href="#"><div class="nav-logo-dot"></div>Charmera</a>
   <ul class="nav-links">
     <li><a href="#shop">Shop</a></li>
     <li><a href="#bundle-section">Bundle</a></li>
     <li><a href="#how-section">How to Order</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
-    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    <span class="cart-count" id="cart-count">0</span>
-  </button>
+  <div class="nav-right">
+    <button class="cart-btn" id="cart-toggle" aria-label="Open cart">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Cart
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero" id="home">
   <div>
-    <div class="hero-badge"><span class="blink"></span>KODAK OFFICIAL · BLIND BOX COLLECTION</div>
-    <h1 class="hero-title">TINY<br/><span class="y">CAMERA</span><br/><span class="o">BIG VIBES</span></h1>
-    <p class="hero-sub">Inspired by the iconic 1987 KODAK Fling — the cutest keychain digital camera with vintage frames, film filters, and a mystery design waiting for you.</p>
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>KODAK OFFICIAL · BLIND BOX COLLECTION</div>
+    <h1 class="hero-title">The Cutest<br/>Camera<br/><span class="accent">on Your Keys</span></h1>
+    <p class="hero-desc">Inspired by the iconic 1987 KODAK Fling — now reimagined as a keychain digital camera with vintage frames, 7 film filters, and a mystery blind box design.</p>
     <div class="hero-actions">
-      <a href="#shop" class="btn btn-yellow">Shop Now</a>
-      <a href="#bundle-section" class="btn btn-ghost">See Bundle Deal</a>
+      <a href="#shop" class="btn btn-dark">Shop Now</a>
+      <a href="#bundle-section" class="btn btn-outline">See Bundle Deal</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Unique Designs</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">KODAK Frames</div></div>
+      <div class="stat"><div class="stat-num">1.6MP</div><div class="stat-label">Photo + Video</div></div>
     </div>
   </div>
   <div class="hero-visual">
-    <div class="cam-wrap">
-      <div class="cam-orbit"></div>
-      <div class="cam-body">
-        <div class="cam-ring"><div class="cam-ring-stem"></div><div class="cam-ring-top"></div><div class="cam-ring-stem"></div></div>
-        <div class="cam-brand">KODAK</div>
-        <div class="cam-model">CHARMERA · DIGITAL</div>
-        <div class="cam-lens"></div>
-        <div class="cam-foot"><div class="cam-flash"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--muted);opacity:0.5">USB-C</div><div class="cam-shutter"></div></div>
+    <div class="cam-card">
+      <span class="cam-emoji">📷</span>
+      <div class="cam-card-brand">KODAK</div>
+      <div class="cam-card-name">CHARMERA</div>
+      <div class="cam-pill-row">
+        <span class="cam-pill yellow">Blind Box</span>
+        <span class="cam-pill">USB-C</span>
+        <span class="cam-pill">7 Filters</span>
       </div>
-      <div class="cam-float f1">7 DESIGNS<br/>✦ BLIND BOX</div>
-      <div class="cam-float f2">1.6MP · VIDEO<br/>VINTAGE FILTERS</div>
-      <div class="cam-float f3">USB-C ⚡<br/>RECHARGEABLE</div>
+      <div class="cam-float-badge fb-1"><span class="fb-dot" style="background:#22C55E"></span>In Stock</div>
+      <div class="cam-float-badge fb-2"><span class="fb-dot" style="background:#F5C800"></span>Blind Box Surprise!</div>
     </div>
   </div>
 </section>
 
-<div class="ticker-bar">
+<!-- TICKER -->
+<div class="ticker">
   <div class="ticker-track">
-    <span class="ticker-item">CAPTURE EVERYTHING</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">VINTAGE FRAMES</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">7 SPECIAL FILTERS</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">BLIND BOX SURPRISE</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">KEYCHAIN SIZED</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">DATE STAMP</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">MICROSD SUPPORT</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">CAPTURE EVERYTHING</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">VINTAGE FRAMES</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
-    <span class="ticker-item">7 SPECIAL FILTERS</span><span style="margin:0 4px;opacity:.35"> ◆ </span>
+    <span class="ticker-item">KODAK CHARMERA</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">VINTAGE FILM FRAMES</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">7 SPECIAL FILTERS</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">BLIND BOX COLLECTION</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">KEYCHAIN SIZED</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">DATE STAMP</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">MICROSD SUPPORT</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">USB-C RECHARGEABLE</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">KODAK CHARMERA</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">VINTAGE FILM FRAMES</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">7 SPECIAL FILTERS</span><span style="opacity:.4"> · </span>
+    <span class="ticker-item">BLIND BOX COLLECTION</span><span style="opacity:.4"> · </span>
   </div>
 </div>
 
-<section class="shop-section" id="shop">
-  <div class="section-eyebrow">All Products</div>
-  <h2 class="section-heading">THE <span class="y">SHOP</span></h2>
+<!-- SHOP -->
+<section class="section shop-section" id="shop">
+  <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+    <div>
+      <div class="section-eyebrow">Our Products</div>
+      <h2 class="section-title">The Shop</h2>
+    </div>
+  </div>
   <div class="shop-toolbar">
     <div class="filter-pills" id="filter-pills">
-      <button class="pill active" data-filter="all">All</button>
+      <button class="pill active" data-filter="all">All Products</button>
       <button class="pill" data-filter="camera">Camera</button>
       <button class="pill" data-filter="bundle">Bundles</button>
       <button class="pill" data-filter="accessory">Accessories</button>
@@ -345,76 +468,117 @@
   <div class="product-grid" id="product-grid"></div>
 </section>
 
-<section class="bundle-feature" id="bundle-section">
-  <div class="section-eyebrow">Best Value</div>
-  <h2 class="section-heading">THE STARTER <span class="y">BUNDLE</span></h2>
-  <div class="bundle-feature-grid">
-    <div class="bundle-includes">
-      <div class="bundle-row"><div class="bundle-num">01</div><div class="bundle-icon">📷</div><div><div class="bundle-info-title">CHARMERA CAMERA</div><p class="bundle-info-desc">The iconic KODAK Charmera keychain camera with keyring, USB-C cable, and ID card. Blind box — surprise design.</p></div></div>
-      <div class="bundle-row"><div class="bundle-num">02</div><div class="bundle-icon">🎬</div><div><div class="bundle-info-title">VIDEO TUTORIAL</div><p class="bundle-info-desc">Step-by-step video guide covering setup, modes, all 7 filters, date stamp, and how to transfer files to your phone.</p></div></div>
-      <div class="bundle-row"><div class="bundle-num">03</div><div class="bundle-icon">🎨</div><div><div class="bundle-info-title">EDITING PRESETS</div><p class="bundle-info-desc">Exclusive film-style presets for Lightroom and VSCO. Instantly elevate your Charmera shots.</p></div></div>
-      <div class="bundle-row"><div class="bundle-num">04</div><div class="bundle-icon">📖</div><div><div class="bundle-info-title">BEGINNER'S GUIDE</div><p class="bundle-info-desc">Digital guide to the film aesthetic — composition, lighting, and building your own visual style.</p></div></div>
+<!-- BUNDLE FEATURE -->
+<section class="section bundle-section" id="bundle-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Best Value</div>
+    <h2 class="section-title">The Starter <span class="accent">Bundle</span></h2>
+    <p class="section-desc">Get the camera plus everything you need to start shooting like a pro, all in one package.</p>
+  </div>
+  <div class="bundle-grid">
+    <div class="bundle-items">
+      <div class="bundle-item">
+        <div class="bundle-item-icon">📷</div>
+        <div><div class="bundle-item-title">CHARMERA Camera</div><p class="bundle-item-desc">The iconic KODAK Charmera keychain camera with keyring, USB-C cable, and CHARMERA ID card. Blind box design.</p></div>
+      </div>
+      <div class="bundle-item">
+        <div class="bundle-item-icon">🎬</div>
+        <div><div class="bundle-item-title">Step-by-Step Video Tutorial</div><p class="bundle-item-desc">Full video guide covering setup, shooting modes, all 7 filters, date stamp, and transferring photos to your phone.</p></div>
+      </div>
+      <div class="bundle-item">
+        <div class="bundle-item-icon">🎨</div>
+        <div><div class="bundle-item-title">Exclusive Editing Presets</div><p class="bundle-item-desc">Film-style presets for Lightroom and VSCO, curated to match the Charmera's vintage aesthetic perfectly.</p></div>
+      </div>
+      <div class="bundle-item">
+        <div class="bundle-item-icon">📖</div>
+        <div><div class="bundle-item-title">Beginner's Photography Guide</div><p class="bundle-item-desc">Digital guide covering composition, lighting tips, and how to develop your own signature film aesthetic.</p></div>
+      </div>
     </div>
-    <div class="bundle-cta-panel">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Bundle Price</div>
-      <div class="bundle-price-big"><span class="bundle-price-currency">RM</span><span id="bundle-price-display">--</span></div>
-      <div class="bundle-savings" id="bundle-savings-badge">Loading...</div>
-      <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:28px">Camera + Tutorial + Presets + Guide.<br/>Everything you need to shoot like a pro.</p>
-      <button class="btn btn-yellow" style="width:100%;justify-content:center;" id="bundle-add-btn">Add Bundle to Cart</button>
+    <div class="bundle-cta" id="bundle-cta">
+      <span class="bundle-tag">Best Value Bundle</span>
+      <div class="bundle-price-row">
+        <div class="bundle-price"><small>RM</small><span id="bundle-price-display">--</span></div>
+        <span class="bundle-orig" id="bundle-orig-price"></span>
+      </div>
+      <div class="bundle-save" id="bundle-save-text"></div>
+      <div class="bundle-includes-list">
+        <div class="inc-row"><div class="inc-check">✓</div><span>CHARMERA Camera (blind box)</span></div>
+        <div class="inc-row"><div class="inc-check">✓</div><span>Video Tutorial</span></div>
+        <div class="inc-row"><div class="inc-check">✓</div><span>Editing Presets (Lightroom/VSCO)</span></div>
+        <div class="inc-row"><div class="inc-check">✓</div><span>Beginner's Guide</span></div>
+      </div>
+      <button class="btn btn-dark" style="width:100%;justify-content:center;padding:15px 24px;" id="bundle-add-btn">Add Bundle to Cart</button>
+      <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-top:12px;line-height:1.6">Digital items sent via email/WhatsApp after payment</p>
     </div>
   </div>
 </section>
 
-<section class="how-section" id="how-section">
-  <div class="section-eyebrow">Super Easy</div>
-  <h2 class="section-heading">HOW TO <span class="y">ORDER</span></h2>
+<!-- FEATURES -->
+<section class="section features-section">
+  <div class="section-eyebrow">Why Charmera</div>
+  <h2 class="section-title" style="color:#fff">Built for <span class="accent">the Aesthetic</span></h2>
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon">📸</div><div class="feat-title">Photo + Video</div><p class="feat-desc">Capture both photos and videos. Perfect for daily moments, trips, and aesthetic content creation.</p></div>
+    <div class="feat-card"><div class="feat-icon">🎞️</div><div class="feat-title">4 KODAK Frames</div><p class="feat-desc">4 authentic KODAK frames built right in. Give your shots that real analogue film edge without editing.</p></div>
+    <div class="feat-card"><div class="feat-icon">✨</div><div class="feat-title">7 Special Filters</div><p class="feat-desc">From warm retro tones to dramatic cool grades. Every filter applied in-camera — no editing needed.</p></div>
+    <div class="feat-card"><div class="feat-icon">📅</div><div class="feat-title">Date Stamp</div><p class="feat-desc">Timestamp your memories the retro way — just like a disposable camera, but rechargeable via USB-C.</p></div>
+  </div>
+</section>
+
+<!-- HOW TO ORDER -->
+<section class="section how-section" id="how-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Ordering is Easy</div>
+    <h2 class="section-title">How to Order</h2>
+  </div>
   <div class="steps-grid">
-    <div class="step"><div class="step-num">01</div><div class="step-title">ADD TO CART</div><p class="step-desc">Browse the shop, pick your product, and click the + button. Your cart counter will update at the top right.</p></div>
-    <div class="step"><div class="step-num">02</div><div class="step-title">CHECKOUT</div><p class="step-desc">Fill in your name, contact, and delivery address. Choose WhatsApp order or DuitNow bank transfer.</p></div>
-    <div class="step"><div class="step-num">03</div><div class="step-title">PAY & DONE</div><p class="step-desc">Complete your payment. Your order ships and digital items are delivered to your email or WhatsApp.</p></div>
+    <div class="step-card"><div class="step-number">1</div><div class="step-title">Add to Cart</div><p class="step-desc">Browse the shop, pick your product, and click the + button or "Add to Cart". Your cart updates instantly in the top right.</p></div>
+    <div class="step-card"><div class="step-number">2</div><div class="step-title">Checkout</div><p class="step-desc">Fill in your name, phone, and delivery address. Choose to pay via <strong>WhatsApp + bank transfer</strong> or DuitNow FPX.</p></div>
+    <div class="step-card"><div class="step-number">3</div><div class="step-title">Pay &amp; Receive</div><p class="step-desc">Transfer payment and send your receipt to <a href="https://wa.me/601160979138" target="_blank">+6011-6097 9138</a>. Digital items are delivered instantly!</p></div>
   </div>
 </section>
 
-<section class="contact-section" id="contact">
-  <div class="contact-bg-text">SHOOT</div>
-  <div class="contact-inner">
-    <div class="section-eyebrow" style="justify-content:center">Get in Touch</div>
-    <h2 class="section-heading">SAY <span class="y">HELLO</span></h2>
-    <p style="font-size:17px;font-style:italic;color:var(--muted);max-width:400px;margin:0 auto">Questions? Custom orders? We reply fast!</p>
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="contact-card">
+    <div class="section-eyebrow" style="color:rgba(255,255,255,0.5)">Get in Touch</div>
+    <h2 class="section-title" style="color:#fff;margin-top:8px">Questions? Let's Chat!</h2>
+    <p class="section-desc" style="color:rgba(255,255,255,0.55);margin:12px auto 36px;max-width:400px">We reply fast on WhatsApp. Custom orders, product questions — we're here to help.</p>
     <div class="contact-btns">
       <a href="https://wa.me/601160979138?text=Hi!%20I%20saw%20your%20Charmera%20shop%20and%20I%27d%20like%20to%20ask%20about%20an%20order%20%F0%9F%93%B8" class="btn btn-wa" target="_blank">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         WhatsApp Us
       </a>
-      <a href="mailto:redlipscreative@gmail.com" class="btn btn-ghost">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <a href="mailto:redlipscreative@gmail.com" class="btn btn-outline" style="background:transparent;color:#fff;border-color:rgba(255,255,255,0.25)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         Email Us
       </a>
     </div>
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:24px">+6011-6097 9138 &nbsp;·&nbsp; redlipscreative@gmail.com</p>
+    <p class="contact-info">+6011-6097 9138 &nbsp;·&nbsp; redlipscreative@gmail.com</p>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-logo">CHARMERA</div>
+  <div class="footer-logo"><div class="footer-logo-dot"></div>Charmera Shop</div>
   <div class="footer-text">Powered by KODAK nostalgia · Orders via WhatsApp &amp; Email</div>
-  <div class="footer-text">redlipscreative@gmail.com · +6011-6097 9138</div>
+  <div class="footer-text">redlipscreative@gmail.com</div>
 </footer>
 
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay"></div>
 <div class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
-    <div class="cart-header-title">YOUR CART</div>
+    <div class="cart-header-title">Your Cart</div>
     <button class="close-btn" id="cart-close">✕</button>
   </div>
-  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-items-list" id="cart-items"></div>
   <div class="cart-footer" id="cart-footer" style="display:none">
     <div class="cart-total-row">
       <span class="cart-total-label">Total</span>
-      <span class="cart-total-val"><small>RM</small> <span id="cart-total">0</span></span>
+      <span class="cart-total-val">RM <span id="cart-total">0</span></span>
     </div>
-    <button class="btn-full btn-full-yellow" id="checkout-open-btn">Proceed to Checkout →</button>
+    <button class="btn-full btn-full-dark" id="checkout-open-btn">Checkout →</button>
     <button class="btn-full btn-full-outline" id="cart-continue-btn">Continue Shopping</button>
   </div>
 </div>
@@ -423,14 +587,14 @@
 <div class="modal-overlay" id="checkout-overlay">
   <div class="modal-box">
     <div class="modal-top">
-      <div class="modal-title">CHECKOUT</div>
+      <div class="modal-title">Checkout</div>
       <button class="close-btn" id="checkout-close">✕</button>
     </div>
     <div class="modal-body">
-      <div class="order-summary-box">
-        <div class="summary-eyebrow">Order Summary</div>
+      <div class="order-summary">
+        <div class="summary-label">Order Summary</div>
         <div id="checkout-items"></div>
-        <div class="summary-total-row">
+        <div class="summary-total">
           <span class="summary-total-label">Total</span>
           <span class="summary-total-val">RM <span id="checkout-total">0</span></span>
         </div>
@@ -457,21 +621,21 @@
         <label class="form-label" for="f-notes">Notes (optional)</label>
         <input class="form-input" id="f-notes" type="text" placeholder="Any special requests?" />
       </div>
-      <div class="payment-title">Payment Method</div>
-      <div class="payment-opts">
-        <div class="pay-opt selected" id="pay-wa" role="button" tabindex="0">
+      <span class="pay-section-label">Payment Method</span>
+      <div class="pay-opts">
+        <div class="pay-opt selected" id="pay-wa">
           <div class="pay-opt-icon">💬</div>
           <div class="pay-opt-label">WhatsApp</div>
           <div class="pay-opt-sub">Order via WhatsApp + bank transfer</div>
         </div>
-        <div class="pay-opt" id="pay-bank" role="button" tabindex="0">
+        <div class="pay-opt" id="pay-bank">
           <div class="pay-opt-icon">🏦</div>
           <div class="pay-opt-label">DuitNow / FPX</div>
-          <div class="pay-opt-sub">Direct bank transfer details shown</div>
+          <div class="pay-opt-sub">Bank transfer details shown instantly</div>
         </div>
       </div>
       <button class="btn-full btn-full-wa" id="submit-btn">Send Order via WhatsApp →</button>
-      <p class="checkout-note">No cancellations after order is confirmed. Digital items sent immediately after payment.</p>
+      <p class="checkout-note">No cancellations after order confirmed. Digital items sent immediately after payment.</p>
     </div>
   </div>
 </div>
@@ -480,8 +644,8 @@
 <div class="success-overlay" id="success-overlay">
   <div class="success-box">
     <span class="success-icon" id="s-icon">🎉</span>
-    <div class="success-title" id="s-title">ORDER PLACED!</div>
-    <p class="success-sub" id="s-sub">Your order was sent to WhatsApp. Complete the payment and we'll ship it out!</p>
+    <div class="success-title" id="s-title">Order Sent!</div>
+    <p class="success-sub" id="s-sub">Your order was sent to WhatsApp. Complete the payment and we'll ship it right away!</p>
     <div class="bank-card" id="bank-card" style="display:none">
       <div class="bank-card-title">Payment Details</div>
       <div class="bank-row"><span class="bank-label">Bank</span><span class="bank-val">Maybank</span></div>
@@ -492,7 +656,7 @@
       <div class="bank-row"><span class="bank-label">Reference</span><span class="bank-val" id="b-ref">ORDER-XXXX</span></div>
     </div>
     <p class="success-sub" id="b-note" style="display:none;margin-bottom:20px">After paying, send your receipt screenshot to <strong>+6011-6097 9138</strong> on WhatsApp.</p>
-    <button class="btn-full btn-full-outline" id="success-close">Back to Shop</button>
+    <button class="btn-full btn-full-outline" id="success-close" style="border-color:var(--border-strong);color:var(--text-muted)">Back to Shop</button>
   </div>
 </div>
 
@@ -532,7 +696,7 @@ const PRODUCTS = [
     originalPrice: 249,
     emoji: '✨',
     desc: 'Camera + Tutorial + Presets + Guide',
-    badges: ['Bundle', 'Best Value'],
+    badges: ['Best Value'],
     inStock: true,
   },
   {
@@ -551,27 +715,27 @@ const PRODUCTS = [
     name: 'Product Name',
     category: 'camera',       // camera | bundle | accessory
     price: 99,
-    originalPrice: 129,       // optional
+    originalPrice: 129,       // optional — shows crossed-out price
     emoji: '🎞️',
-    desc: 'Short description',
-    badges: ['New'],           // New | Bundle | Best Seller | Best Value | Hot
+    desc: 'Short description line',
+    badges: ['New'],           // New | Best Seller | Best Value | Hot
     inStock: true,
   },
   ─────────────────────────────── */
 ];
 
 const WA_NUMBER = '601160979138';
-const BANK_ACCOUNT = 'XXXX-XXXX-XXXX'; // Update this
+const BANK_ACCOUNT = 'XXXX-XXXX-XXXX'; // ← Update with your Maybank account number
 
 /* ==============================================
    CART
    ============================================== */
-let cart = JSON.parse(localStorage.getItem('charmera-v1') || '[]');
+let cart = JSON.parse(localStorage.getItem('charmera-v2') || '[]');
 let payMethod = 'wa';
 
-const save = () => localStorage.setItem('charmera-v1', JSON.stringify(cart));
-const total = () => cart.reduce((s, i) => s + i.price * i.qty, 0);
-const count = () => cart.reduce((s, i) => s + i.qty, 0);
+const save = () => localStorage.setItem('charmera-v2', JSON.stringify(cart));
+const cartTotal = () => cart.reduce((s, i) => s + i.price * i.qty, 0);
+const cartCount = () => cart.reduce((s, i) => s + i.qty, 0);
 
 function addToCart(id) {
   const p = PRODUCTS.find(x => x.id === id);
@@ -579,8 +743,8 @@ function addToCart(id) {
   const ex = cart.find(x => x.id === id);
   if (ex) ex.qty++;
   else cart.push({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, qty: 1 });
-  save(); syncCartUI();
-  toast('Added to cart: ' + p.name);
+  save(); syncCart();
+  toast('Added: ' + p.name);
 }
 
 function updateQty(id, d) {
@@ -588,95 +752,75 @@ function updateQty(id, d) {
   if (!item) return;
   item.qty = Math.max(0, item.qty + d);
   if (item.qty === 0) cart = cart.filter(x => x.id !== id);
-  save(); syncCartUI();
+  save(); syncCart();
 }
 
-function removeFromCart(id) {
+function removeItem(id) {
   cart = cart.filter(x => x.id !== id);
-  save(); syncCartUI();
+  save(); syncCart();
 }
 
-function syncCartUI() {
-  const n = count();
-  const countEl = document.getElementById('cart-count');
-  countEl.textContent = n;
-  countEl.classList.toggle('visible', n > 0);
+function syncCart() {
+  const n = cartCount();
+  const el = document.getElementById('cart-count');
+  el.textContent = n;
+  el.classList.toggle('visible', n > 0);
   document.getElementById('cart-footer').style.display = n > 0 ? 'block' : 'none';
-  document.getElementById('cart-total').textContent = total().toLocaleString();
-  buildCartItems();
+  document.getElementById('cart-total').textContent = cartTotal().toLocaleString();
+  buildCartList();
 }
 
-function buildCartItems() {
+function buildCartList() {
   const container = document.getElementById('cart-items');
   container.textContent = '';
-
   if (cart.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'cart-empty';
-    const icon = document.createElement('div');
-    icon.className = 'cart-empty-icon';
-    icon.textContent = '🛒';
+    const ico = document.createElement('div');
+    ico.className = 'cart-empty-icon';
+    ico.textContent = '🛍️';
     const msg = document.createElement('p');
     msg.textContent = 'Your cart is empty';
-    empty.appendChild(icon);
+    empty.appendChild(ico);
     empty.appendChild(msg);
     container.appendChild(empty);
     return;
   }
-
   cart.forEach(item => {
     const row = document.createElement('div');
     row.className = 'cart-item';
-
     const ico = document.createElement('div');
-    ico.className = 'cart-item-icon';
+    ico.className = 'cart-item-emoji';
     ico.textContent = item.emoji;
-
     const info = document.createElement('div');
     info.className = 'cart-item-info';
-
     const name = document.createElement('div');
     name.className = 'cart-item-name';
     name.textContent = item.name;
-
     const price = document.createElement('div');
     price.className = 'cart-item-price';
     price.textContent = 'RM ' + (item.price * item.qty).toLocaleString();
-
-    const qtyWrap = document.createElement('div');
-    qtyWrap.className = 'cart-qty';
-
-    const minusBtn = document.createElement('button');
-    minusBtn.className = 'qty-btn';
-    minusBtn.textContent = '−';
-    minusBtn.addEventListener('click', () => updateQty(item.id, -1));
-
-    const qtyNum = document.createElement('span');
-    qtyNum.className = 'qty-num';
-    qtyNum.textContent = item.qty;
-
-    const plusBtn = document.createElement('button');
-    plusBtn.className = 'qty-btn';
-    plusBtn.textContent = '+';
-    plusBtn.addEventListener('click', () => updateQty(item.id, 1));
-
-    qtyWrap.appendChild(minusBtn);
-    qtyWrap.appendChild(qtyNum);
-    qtyWrap.appendChild(plusBtn);
-
-    info.appendChild(name);
-    info.appendChild(price);
-    info.appendChild(qtyWrap);
-
-    const rmBtn = document.createElement('button');
-    rmBtn.className = 'item-remove';
-    rmBtn.setAttribute('aria-label', 'Remove item');
-    rmBtn.textContent = '✕';
-    rmBtn.addEventListener('click', () => removeFromCart(item.id));
-
-    row.appendChild(ico);
-    row.appendChild(info);
-    row.appendChild(rmBtn);
+    const qty = document.createElement('div');
+    qty.className = 'cart-qty';
+    const minus = document.createElement('button');
+    minus.className = 'qty-btn';
+    minus.textContent = '−';
+    minus.addEventListener('click', () => updateQty(item.id, -1));
+    const num = document.createElement('span');
+    num.className = 'qty-num';
+    num.textContent = item.qty;
+    const plus = document.createElement('button');
+    plus.className = 'qty-btn';
+    plus.textContent = '+';
+    plus.addEventListener('click', () => updateQty(item.id, 1));
+    qty.appendChild(minus); qty.appendChild(num); qty.appendChild(plus);
+    info.appendChild(name); info.appendChild(price); info.appendChild(qty);
+    const rm = document.createElement('button');
+    rm.className = 'item-remove';
+    rm.setAttribute('aria-label', 'Remove');
+    rm.textContent = '✕';
+    rm.addEventListener('click', () => removeItem(item.id));
+    row.appendChild(ico); row.appendChild(info); row.appendChild(rm);
     container.appendChild(row);
   });
 }
@@ -689,13 +833,11 @@ function openCart() {
   document.getElementById('cart-drawer').classList.add('open');
   document.body.classList.add('no-scroll');
 }
-
 function closeCart() {
   document.getElementById('cart-overlay').classList.remove('open');
   document.getElementById('cart-drawer').classList.remove('open');
   document.body.classList.remove('no-scroll');
 }
-
 document.getElementById('cart-toggle').addEventListener('click', openCart);
 document.getElementById('cart-close').addEventListener('click', closeCart);
 document.getElementById('cart-overlay').addEventListener('click', closeCart);
@@ -710,12 +852,10 @@ function openCheckout() {
   document.body.classList.add('no-scroll');
   buildCheckoutSummary();
 }
-
 function closeCheckout() {
   document.getElementById('checkout-overlay').classList.remove('open');
   document.body.classList.remove('no-scroll');
 }
-
 document.getElementById('checkout-open-btn').addEventListener('click', openCheckout);
 document.getElementById('checkout-close').addEventListener('click', closeCheckout);
 
@@ -730,76 +870,55 @@ function buildCheckoutSummary() {
     const val = document.createElement('span');
     val.className = 'summary-price';
     val.textContent = 'RM ' + (item.price * item.qty).toLocaleString();
-    row.appendChild(label);
-    row.appendChild(val);
+    row.appendChild(label); row.appendChild(val);
     container.appendChild(row);
   });
-  document.getElementById('checkout-total').textContent = total().toLocaleString();
+  document.getElementById('checkout-total').textContent = cartTotal().toLocaleString();
 }
 
 document.getElementById('pay-wa').addEventListener('click', function() {
   document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
-  this.classList.add('selected');
-  payMethod = 'wa';
+  this.classList.add('selected'); payMethod = 'wa';
   const btn = document.getElementById('submit-btn');
   btn.textContent = 'Send Order via WhatsApp →';
   btn.className = 'btn-full btn-full-wa';
 });
-
 document.getElementById('pay-bank').addEventListener('click', function() {
   document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
-  this.classList.add('selected');
-  payMethod = 'bank';
+  this.classList.add('selected'); payMethod = 'bank';
   const btn = document.getElementById('submit-btn');
   btn.textContent = 'Confirm & Get Payment Details →';
-  btn.className = 'btn-full btn-full-bank';
+  btn.className = 'btn-full btn-full-yellow';
 });
 
 document.getElementById('submit-btn').addEventListener('click', function() {
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   const address = document.getElementById('f-address').value.trim();
-
-  if (!name || !phone || !address) {
-    toast('Please fill in Name, Phone and Address');
-    return;
-  }
-
+  if (!name || !phone || !address) { toast('Please fill in Name, Phone and Address'); return; }
   const ref = 'ORD-' + Date.now().toString().slice(-6);
   const lines = cart.map(i => '• ' + i.emoji + ' ' + i.name + ' x' + i.qty + ' = RM ' + (i.price * i.qty).toLocaleString()).join('\n');
-  const orderTotal = total();
+  const total = cartTotal();
   const notes = document.getElementById('f-notes').value.trim();
-
   if (payMethod === 'wa') {
-    const msg = 'Hi! I would like to place an order!\n\n'
-      + 'Order Ref: ' + ref + '\n\n'
-      + 'Items:\n' + lines + '\n\n'
-      + 'TOTAL: RM ' + orderTotal.toLocaleString() + '\n\n'
-      + 'Name: ' + name + '\n'
-      + 'Phone: ' + phone + '\n'
-      + 'Address: ' + address
-      + (notes ? '\nNotes: ' + notes : '');
+    const msg = 'Hi! I would like to place an order!\n\nOrder Ref: ' + ref + '\n\nItems:\n' + lines + '\n\nTOTAL: RM ' + total.toLocaleString() + '\n\nName: ' + name + '\nPhone: ' + phone + '\nAddress: ' + address + (notes ? '\nNotes: ' + notes : '');
     window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
-    showSuccess('wa', ref, orderTotal);
-  } else {
-    showSuccess('bank', ref, orderTotal);
-  }
-
-  cart = []; save(); syncCartUI();
-  closeCheckout();
+    showSuccess('wa', ref, total);
+  } else { showSuccess('bank', ref, total); }
+  cart = []; save(); syncCart(); closeCheckout();
 });
 
 function showSuccess(type, ref, amt) {
   if (type === 'wa') {
     document.getElementById('s-icon').textContent = '🎉';
-    document.getElementById('s-title').textContent = 'ORDER SENT!';
+    document.getElementById('s-title').textContent = 'Order Sent!';
     document.getElementById('s-sub').textContent = 'Your order was sent to WhatsApp. Complete the payment and we\'ll ship it right away!';
     document.getElementById('bank-card').style.display = 'none';
     document.getElementById('b-note').style.display = 'none';
   } else {
     document.getElementById('s-icon').textContent = '🏦';
-    document.getElementById('s-title').textContent = 'ALMOST DONE!';
-    document.getElementById('s-sub').textContent = 'Transfer the total amount to the account below, then send your receipt to our WhatsApp.';
+    document.getElementById('s-title').textContent = 'Almost Done!';
+    document.getElementById('s-sub').textContent = 'Transfer the total below to our account, then send your receipt screenshot to WhatsApp.';
     document.getElementById('b-amount').textContent = 'RM ' + amt.toLocaleString();
     document.getElementById('b-ref').textContent = ref;
     document.getElementById('b-acct').textContent = BANK_ACCOUNT;
@@ -808,13 +927,12 @@ function showSuccess(type, ref, amt) {
   }
   document.getElementById('success-overlay').classList.add('open');
 }
-
-document.getElementById('success-close').addEventListener('click', function() {
+document.getElementById('success-close').addEventListener('click', () => {
   document.getElementById('success-overlay').classList.remove('open');
 });
 
 /* ==============================================
-   PRODUCT RENDERING
+   PRODUCTS RENDERING
    ============================================== */
 let activeFilter = 'all';
 
@@ -823,100 +941,77 @@ function renderProducts() {
   grid.textContent = '';
   const list = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
   document.getElementById('product-count').textContent = list.length + ' product' + (list.length !== 1 ? 's' : '');
-
   list.forEach(p => {
     const card = document.createElement('div');
     card.className = 'product-card';
-    card.setAttribute('tabindex', '0');
-
-    /* Image area */
     const imgWrap = document.createElement('div');
     imgWrap.className = 'card-image';
     const art = document.createElement('div');
-    art.className = 'card-img-art';
+    art.className = 'card-img-emoji';
     art.textContent = p.emoji;
     const badgeWrap = document.createElement('div');
-    badgeWrap.className = 'card-badge-wrap';
+    badgeWrap.className = 'card-badges';
     if (!p.inStock) {
       const b = document.createElement('span');
-      b.className = 'card-badge badge-grey';
+      b.className = 'badge badge-grey';
       b.textContent = 'Sold Out';
       badgeWrap.appendChild(b);
     } else {
       p.badges.forEach(label => {
         const b = document.createElement('span');
         b.textContent = label;
-        if (label === 'New') b.className = 'card-badge badge-new';
-        else if (['Bundle', 'Best Value'].includes(label)) b.className = 'card-badge badge-bundle';
-        else b.className = 'card-badge badge-hot';
+        if (label === 'New') b.className = 'badge badge-new';
+        else if (label === 'Best Value' || label === 'Bundle') b.className = 'badge badge-bundle';
+        else if (label === 'Best Seller' || label === 'Hot') b.className = 'badge badge-hot';
+        else b.className = 'badge badge-new';
         badgeWrap.appendChild(b);
       });
     }
-    imgWrap.appendChild(art);
-    imgWrap.appendChild(badgeWrap);
-
-    /* Body */
+    imgWrap.appendChild(art); imgWrap.appendChild(badgeWrap);
     const body = document.createElement('div');
     body.className = 'card-body';
-
     const cat = document.createElement('div');
     cat.className = 'card-cat';
     cat.textContent = p.category;
-
     const name = document.createElement('div');
     name.className = 'card-name';
     name.textContent = p.name;
-
     const desc = document.createElement('p');
     desc.className = 'card-desc';
     desc.textContent = p.desc;
-
     const footer = document.createElement('div');
     footer.className = 'card-footer';
-
-    const priceBlock = document.createElement('div');
-    priceBlock.className = 'price-block';
-
-    const priceEl = document.createElement('div');
-    priceEl.className = 'card-price';
+    const pb = document.createElement('div');
+    pb.className = 'price-block';
+    const pr = document.createElement('div');
+    pr.className = 'card-price';
     const sm = document.createElement('small');
-    sm.textContent = 'RM';
-    priceEl.appendChild(sm);
-    priceEl.appendChild(document.createTextNode(p.price.toLocaleString()));
-    priceBlock.appendChild(priceEl);
-
+    sm.textContent = 'RM ';
+    pr.appendChild(sm);
+    pr.appendChild(document.createTextNode(p.price.toLocaleString()));
+    pb.appendChild(pr);
     if (p.originalPrice) {
       const orig = document.createElement('span');
       orig.className = 'price-original';
       orig.textContent = 'RM ' + p.originalPrice.toLocaleString();
-      priceBlock.appendChild(orig);
+      pb.appendChild(orig);
     }
-
     const addBtn = document.createElement('button');
     addBtn.className = 'card-add';
     addBtn.setAttribute('aria-label', 'Add to cart');
-    if (!p.inStock) {
-      addBtn.textContent = '✕';
-      addBtn.disabled = true;
-    } else {
+    if (!p.inStock) { addBtn.textContent = '✕'; addBtn.disabled = true; }
+    else {
       addBtn.textContent = '+';
       addBtn.addEventListener('click', e => { e.stopPropagation(); addToCart(p.id); });
     }
-
-    footer.appendChild(priceBlock);
-    footer.appendChild(addBtn);
-    body.appendChild(cat);
-    body.appendChild(name);
-    body.appendChild(desc);
-    body.appendChild(footer);
-    card.appendChild(imgWrap);
-    card.appendChild(body);
+    footer.appendChild(pb); footer.appendChild(addBtn);
+    body.appendChild(cat); body.appendChild(name); body.appendChild(desc); body.appendChild(footer);
+    card.appendChild(imgWrap); card.appendChild(body);
     if (p.inStock) card.addEventListener('click', () => addToCart(p.id));
     grid.appendChild(card);
   });
 }
 
-/* Filter pills */
 document.getElementById('filter-pills').addEventListener('click', function(e) {
   if (!e.target.classList.contains('pill')) return;
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
@@ -925,10 +1020,8 @@ document.getElementById('filter-pills').addEventListener('click', function(e) {
   renderProducts();
 });
 
-/* Bundle CTA */
-document.getElementById('bundle-add-btn').addEventListener('click', function() {
-  addToCart('charmera-bundle');
-  openCart();
+document.getElementById('bundle-add-btn').addEventListener('click', () => {
+  addToCart('charmera-bundle'); openCart();
 });
 
 function initBundlePanel() {
@@ -936,7 +1029,8 @@ function initBundlePanel() {
   if (!b) return;
   document.getElementById('bundle-price-display').textContent = b.price.toLocaleString();
   if (b.originalPrice) {
-    document.getElementById('bundle-savings-badge').textContent = 'Save RM ' + (b.originalPrice - b.price) + ' vs buying separately';
+    document.getElementById('bundle-orig-price').textContent = 'RM ' + b.originalPrice.toLocaleString();
+    document.getElementById('bundle-save-text').textContent = 'You save RM ' + (b.originalPrice - b.price) + ' vs buying separately';
   }
 }
 
@@ -947,7 +1041,7 @@ function toast(msg) {
   const wrap = document.getElementById('toast-wrap');
   const el = document.createElement('div');
   el.className = 'toast';
-  el.textContent = msg;
+  el.textContent = '✓ ' + msg;
   wrap.appendChild(el);
   setTimeout(() => el.remove(), 2900);
 }
@@ -955,31 +1049,21 @@ function toast(msg) {
 /* ==============================================
    SCROLL REVEAL
    ============================================== */
-function initScrollReveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.bundle-row, .step').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    obs.observe(el);
-  });
-}
-
-/* ==============================================
-   INIT
-   ============================================== */
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   initBundlePanel();
-  syncCartUI();
-  initScrollReveal();
+  syncCart();
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.bundle-item, .step-card, .feat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    obs.observe(el);
+  });
 });
 </script>
 </body>
