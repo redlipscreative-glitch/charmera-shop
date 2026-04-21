@@ -404,20 +404,6 @@
   <!-- MAIN -->
   <main class="main-content">
 
-    <!-- Bundle feature banner -->
-    <div class="featured-banner" id="bundle-section">
-      <div class="featured-icon">✨</div>
-      <div style="flex:1">
-        <div class="featured-title">Starter Bundle — Best Value!</div>
-        <div class="featured-desc">Camera + Video Tutorial + Editing Presets + Beginner's Guide. Everything to shoot like a pro.</div>
-        <button class="hero-btn hero-btn-red" onclick="addToCart('charmera-bundle');openCart()" style="font-size:13px;padding:9px 20px">Add Bundle to Cart → (Max 2)</button>
-      </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:11px;color:#999;text-decoration:line-through" id="banner-orig"></div>
-        <div style="font-size:28px;font-weight:700;color:#C41E1E" id="banner-price"></div>
-        <div style="font-size:11px;color:#16A34A;font-weight:600" id="banner-save"></div>
-      </div>
-    </div>
 
     <!-- All products -->
     <div class="section-box" id="all-products">
@@ -923,16 +909,6 @@ document.getElementById('filter-bar').addEventListener('click', function(e) {
   renderProducts();
 });
 
-/* Banner bundle price */
-function initBanner() {
-  const b = PRODUCTS.find(p => p.id === 'charmera-bundle');
-  if (!b) return;
-  document.getElementById('banner-price').textContent = 'RM ' + b.price;
-  if (b.originalPrice) {
-    document.getElementById('banner-orig').textContent = 'RM ' + b.originalPrice;
-    document.getElementById('banner-save').textContent = 'Save RM ' + (b.originalPrice - b.price);
-  }
-}
 
 /* Search */
 function doSearch() {
@@ -1003,7 +979,7 @@ function toast(msg) {
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
-  initBanner();
+
   syncCart();
 });
 </script>
